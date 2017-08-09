@@ -1,5 +1,5 @@
 <?php
-namespace Domain\User;
+namespace Domain;
 
 
 use Ramsey\Uuid\Uuid;

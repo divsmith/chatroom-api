@@ -30,7 +30,9 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "tests/",
+            "Domain\\": "src/domain/",
+            "Storage\\": "src/storage/"
         }
     },
 	"scripts": {

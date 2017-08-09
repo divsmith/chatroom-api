@@ -2,7 +2,7 @@
 namespace Test;
 
 
-use Domain\User\User;
+use Domain\User;
 use Ramsey\Uuid\Uuid;
 
 class UserTest extends \Codeception\Test\Unit
