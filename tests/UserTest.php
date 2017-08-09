@@ -34,13 +34,4 @@ class UserTest extends \Codeception\Test\Unit
         $this->assertEquals($user->uuid(), $uuid);
     }
 
-    public function testAutomaticUUIDGeneration()
-    {
-        $email = 'parker@parkersmith.us';
-        $alias = 'divsmith';
-
-        $user = new User($email, $alias);
-
-        $this->assertNotNull($user->uuid());
-    }
 }

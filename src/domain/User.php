@@ -25,13 +25,8 @@ class User
         return $this->uuid;
     }
 
-    public function __construct($email, $alias, $uuid = null)
+    public function __construct($email, $alias, $uuid)
     {
-        if (!isset($uuid))
-        {
-            $uuid = Uuid::uuid4()->toString();
-        }
-
         $this->email = $email;
         $this->alias = $alias;
         $this->uuid = $uuid;
