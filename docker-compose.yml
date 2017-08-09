@@ -23,7 +23,7 @@ services:
         volumes:
             - /home/parker/code/cs3620/final/data/mysql:/data
         environment:
-            - MYSQL_ROOT_PASSWORD=changeme
+            - MYSQL_ROOT_PASSWORD=supersecretpassword
             - MYSQL_DATABASE=cs3620
             - MYSQL_USER=foo
             - MYSQL_PASSWORD=bar
