@@ -22,7 +22,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Domain\\": "src/domain"
+            "Domain\\": "src/domain/",
+            "Storage\\": "src/storage/"
         }
     },
     "autoload-dev": {
