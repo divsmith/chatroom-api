@@ -22,6 +22,16 @@ class ChatRoom
         return $this->name;
     }
 
+    public function created()
+    {
+        return $this->dateCreated;
+    }
+
+    public function updated()
+    {
+        return $this->dateUpdated;
+    }
+
     public function uuid()
     {
         return $this->uuid;

@@ -20,5 +20,23 @@ class Message
         $this->dateUpdated = $dateUpdated;
     }
 
-    
+    public function userID()
+    {
+        return $this->userID;
+    }
+
+    public function chatRoomID()
+    {
+        return $this->chatRoomID;
+    }
+
+    public function created()
+    {
+        return $this->dateCreated;
+    }
+
+    public function updated()
+    {
+        return $this->dateUpdated;
+    }
 }
