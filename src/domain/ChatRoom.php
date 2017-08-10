@@ -6,10 +6,14 @@ class ChatRoom
 {
     protected $name;
     protected $uuid;
+    protected $dateCreated;
+    protected $dateUpdated;
 
-    public function __construct($name, $uuid = null)
+    public function __construct($name, $dateCreated, $dateUpdated, $uuid = null)
     {
         $this->name = $name;
+        $this->dateCreated = $dateCreated;
+        $this->dateUpdated = $dateUpdated;
         $this->uuid = $uuid;
     }
 
