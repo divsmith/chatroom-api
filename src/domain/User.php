@@ -6,7 +6,6 @@ use Ramsey\Uuid\Uuid;
 
 class User
 {
-    protected $uuid;
     protected $email;
     protected $alias;
 
@@ -20,15 +19,9 @@ class User
         return $this->alias;
     }
 
-    public function uuid()
-    {
-        return $this->uuid;
-    }
-
-    public function __construct($email, $alias, $uuid)
+    public function __construct($email, $alias)
     {
         $this->email = $email;
         $this->alias = $alias;
-        $this->uuid = $uuid;
     }
 }

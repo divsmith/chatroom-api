@@ -25,13 +25,11 @@ class UserTest extends \Codeception\Test\Unit
     {
         $email = 'parker@parkersmith.us';
         $alias = 'divsmith';
-        $uuid = Uuid::uuid4()->toString();
 
-        $user = new User($email, $alias, $uuid);
+        $user = new User($email, $alias);
 
         $this->assertEquals($user->email(), $email);
         $this->assertEquals($user->alias(), $alias);
-        $this->assertEquals($user->uuid(), $uuid);
     }
 
 }
