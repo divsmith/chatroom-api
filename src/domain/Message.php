@@ -4,7 +4,7 @@ namespace Domain;
 
 class Message
 {
-    protected $userID;
+    protected $userEmail;
     protected $chatRoomID;
     protected $message;
     protected $dateCreated;
@@ -13,7 +13,7 @@ class Message
     public function __construct($userID, $chatRoomID, $message,
                     $dateCreated, $dateUpdated)
     {
-        $this->userID = $userID;
+        $this->userEmail = $userID;
         $this->chatRoomID = $chatRoomID;
         $this->message = $message;
         $this->dateCreated = $dateCreated;
@@ -22,7 +22,7 @@ class Message
 
     public function userID()
     {
-        return $this->userID;
+        return $this->userEmail;
     }
 
     public function chatRoomID()
