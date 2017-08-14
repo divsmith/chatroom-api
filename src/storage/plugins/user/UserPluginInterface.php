@@ -16,4 +16,5 @@ interface UserPluginInterface
     public function getByEmail($email);
     public function persist(User $user);
     public function getAll();
+    public function delete($email);
 }
