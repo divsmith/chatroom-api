@@ -3,7 +3,6 @@ namespace Domain;
 
 
 use Domain\Exceptions\InvalidEmailException;
-use Ramsey\Uuid\Uuid;
 
 class User
 {
