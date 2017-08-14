@@ -8,6 +8,7 @@ class User
 {
     protected $email;
     protected $alias;
+    protected $chatRoomID;
 
     public function email()
     {
@@ -19,7 +20,12 @@ class User
         return $this->alias;
     }
 
-    public function __construct($email, $alias)
+    public function chatRoomID()
+    {
+        return $this->chatRoomID;
+    }
+
+    public function __construct($email, $alias, $chatRoomID = null)
     {
         // Validate email address
         if (!filter_var($email, FILTER_VALIDATE_EMAIL))
@@ -30,6 +36,7 @@ class User
         {
             $this->email = $email;
             $this->alias = $alias;
+            $this->chatRoomID = $chatRoomID;
         }
     }
 }
