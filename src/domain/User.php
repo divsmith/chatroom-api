@@ -2,6 +2,7 @@
 namespace Domain;
 
 
+use Domain\Exceptions\InvalidEmailException;
 use Ramsey\Uuid\Uuid;
 
 class User
@@ -24,7 +25,7 @@ class User
         // Validate email address
         if (!filter_var($email, FILTER_VALIDATE_EMAIL))
         {
-            throw new Exception('Invalid email address');
+            throw new InvalidEmailException();
         }
         else
         {

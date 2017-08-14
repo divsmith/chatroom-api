@@ -2,6 +2,7 @@
 namespace Test;
 
 
+use Domain\Exceptions\InvalidEmailException;
 use Domain\User;
 use Ramsey\Uuid\Uuid;
 
@@ -30,6 +31,16 @@ class UserTest extends \Codeception\Test\Unit
 
         $this->assertEquals($user->email(), $email);
         $this->assertEquals($user->alias(), $alias);
+    }
+
+    public function testInvalidEmail()
+    {
+        $email = 'bogus';
+        $alias = 'divsmith';
+
+        $this->expectException(InvalidEmailException::class);
+
+        $user = new User($email, $alias);
     }
 
 }

@@ -6,10 +6,10 @@
  * Time: 10:54 AM
  */
 
-namespace Exceptions;
+namespace Domain\Exceptions;
 
 
-class InvalidEmailException extends \Exception 
+class InvalidEmailException extends \Exception
 {
 
 }
