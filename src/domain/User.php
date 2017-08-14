@@ -21,7 +21,15 @@ class User
 
     public function __construct($email, $alias)
     {
-        $this->email = $email;
-        $this->alias = $alias;
+        // Validate email address
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+        {
+            throw new Exception('Invalid email address');
+        }
+        else
+        {
+            $this->email = $email;
+            $this->alias = $alias;
+        }
     }
 }
