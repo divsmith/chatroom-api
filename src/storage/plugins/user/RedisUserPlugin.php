@@ -40,6 +40,6 @@ class RedisUserPlugin implements UserPluginInterface
 
     public function delete($email)
     {
-        //return $this->client->hdel($email);
+        return $this->client->del($email);
     }
 }

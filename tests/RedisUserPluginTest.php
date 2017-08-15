@@ -47,4 +47,12 @@ class RedisUserPluginTest extends \Codeception\Test\Unit
         $this->assertEquals('something else', $user->alias());
         $this->assertEquals('17', $user->chatRoomID());
     }
+
+    public function testDelete()
+    {
+        $this->plugin->persist($this->user);
+        $this->assertEquals(1, $this->plugin->delete($this->user->email()));
+        $this->assertEquals(0, $this->plugin->delete($this->user->email()));
+        $this->assertEquals(0, $this->plugin->delete('someother@email.com'));
+    }
 }
