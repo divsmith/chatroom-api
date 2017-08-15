@@ -26,13 +26,11 @@ class MessageTest extends \Codeception\Test\Unit
         $chatRoomID = '10';
         $message = "I'm a message!";
         $dateCreated = new \DateTime('now');
-        $dateUpdated = new \DateTime('now');
 
-        $message = new Message($userID, $chatRoomID, $message, $dateCreated, $dateUpdated);
+        $message = new Message($userID, $chatRoomID, $message, $dateCreated);
 
         $this->assertEquals($userID, $message->userID());
         $this->assertEquals($chatRoomID, $message->chatRoomID());
         $this->assertEquals($dateCreated, $message->created());
-        $this->assertEquals($dateUpdated, $message->updated());
     }
 }

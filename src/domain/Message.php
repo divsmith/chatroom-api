@@ -8,16 +8,14 @@ class Message
     protected $chatRoomID;
     protected $message;
     protected $dateCreated;
-    protected $dateUpdated;
 
     public function __construct($userID, $chatRoomID, $message,
-                    $dateCreated, $dateUpdated)
+                    $dateCreated)
     {
         $this->userEmail = $userID;
         $this->chatRoomID = $chatRoomID;
         $this->message = $message;
         $this->dateCreated = $dateCreated;
-        $this->dateUpdated = $dateUpdated;
     }
 
     public function userID()
