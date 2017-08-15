@@ -9,6 +9,8 @@
 namespace Storage\Jacks;
 
 
+use Domain\ChatRoom;
+
 class ChatRoomJack
 {
     protected $plugin;
@@ -21,5 +23,10 @@ class ChatRoomJack
     public function getAll()
     {
         return $this->plugin->getAll();
+    }
+
+    public function persist(ChatRoom $room)
+    {
+        return $this->plugin->persist($room);
     }
 }
