@@ -35,9 +35,16 @@ class RedisUserPluginTest extends \Codeception\Test\Unit
         $this->assertEquals($this->user->alias(), $user->alias());
     }
 
-    protected function testUpdates()
+    public function testUpdates()
     {
         $this->plugin->persist($this->user);
+        $this->user->changeAlias('something else');
+        $this->user->changeChatRoomID('17');
+        $this->plugin->persist($this->user);
 
+        $user = $this->plugin->getByEmail($this->user->email());
+
+        $this->assertEquals('something else', $user->alias());
+        $this->assertEquals('17', $user->chatRoomID());
     }
 }
