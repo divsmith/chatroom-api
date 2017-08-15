@@ -33,5 +33,20 @@ class ChatRoomTest extends \Codeception\Test\Unit
         $this->assertEquals($created, $room->created());
         $this->assertEquals($updated, $room->created());
         $this->assertEquals($uuid, $room->uuid());
+        $this->assertFalse($room->archived());
+    }
+
+    public function testArchivedDate()
+    {
+        $name = 'Chat Room';
+        $uuid = Uuid::uuid4()->toString();
+        $created = new \DateTime('now');
+        $updated = new \DateTime('now');
+
+        $updated = $updated->sub(date_interval_create_from_date_string('8 days'));
+
+        $room = new ChatRoom($name, $created, $updated, $uuid);
+
+        $this->assertTrue($room->archived());
     }
 }
