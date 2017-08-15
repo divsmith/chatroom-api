@@ -32,8 +32,8 @@ class UserJack
         $this->plugin->persist($user);
     }
 
-    public function getAll()
+    public function delete($email)
     {
-        return $this->plugin->getAll();
+        return $this->plugin->delete($email);
     }
 }
