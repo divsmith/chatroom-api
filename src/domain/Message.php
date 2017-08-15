@@ -32,9 +32,4 @@ class Message
     {
         return $this->dateCreated;
     }
-
-    public function updated()
-    {
-        return $this->dateUpdated;
-    }
 }
