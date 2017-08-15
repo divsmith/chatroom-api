@@ -9,7 +9,38 @@ $app->get('/redis', function($request, $response, $args) {
     $response->getBody()->write($client->get('foo'));
 });
 
-$app->get('/[{name}]', function ($request, $response, $args) {
-    $name = $request->getAttribute('name');
-    $response->getBody()->write("Hello, $name");
+//$app->get('/[{name}]', function ($request, $response, $args) {
+//    $name = $request->getAttribute('name');
+//    $response->getBody()->write("Hello, $name");
+//});
+
+$app->get('/chatroom', function($request, $response, $args) {
+    // Return all chatrooms
 });
+
+$app->post('/chatroom', function($request, $response, $args) {
+   // Create a chat room
+});
+
+$app->post('/user', function($request, $response, $args) {
+   // Create a user
+});
+
+$app->put('/user', function($request, $response, $args) {
+   // Update user
+
+    // join chat room
+
+    // leave chat room
+});
+
+$app->get('/user/{email}/chatroom/message', function() {
+    // Return all messages for joined chatroom
+
+    // filter by date range if exists
+});
+
+$app->post('/user/{email}/chatroom/message', function() {
+   // Post a message to joined chatroom
+});
+
