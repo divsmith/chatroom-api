@@ -6,7 +6,13 @@ $app->get('/redis', function($request, $response, $args) {
     $client->set('foo', 'bar');
     $client->del('foo');
     $client->del('fishes');
-    $response->getBody()->write($client->get('foo'));
+    //$response->getBody()->write($client->get('foo'));
+
+});
+
+$app->get('/mysql', function($request, $response, $args) {
+    $db = new PDO('mysql:host=172.18.0.3;dbname=cs3620', 'alpine', 'supersecretpassword');
+    $response->getBody()->write('test');
 });
 
 //$app->get('/[{name}]', function ($request, $response, $args) {

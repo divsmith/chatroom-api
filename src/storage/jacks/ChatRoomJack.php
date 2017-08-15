@@ -10,10 +10,16 @@ namespace Storage\Jacks;
 
 
 use Domain\ChatRoom;
+use Storage\Plugins\Chatroom\ChatRoomPluginInterface;
 
 class ChatRoomJack
 {
     protected $plugin;
+
+    public function __construct(ChatRoomPluginInterface $plugin)
+    {
+        $this->plugin = $plugin;
+    }
 
     public function getByID($id)
     {
