@@ -30,12 +30,7 @@ class RedisUserPlugin implements UserPluginInterface
 
     public function persist(User $user)
     {
-        $this->client->hmset($user->email(), ['alias' => $user->alias(), 'chatRoomID' => $user->chatRoomID()]);
-    }
-
-    public function getAll()
-    {
-        // TODO: Implement getAll() method.
+        $this->client->hmset($user->email(), ['email' => $user->email(), 'alias' => $user->alias(), 'chatRoomID' => $user->chatRoomID()]);
     }
 
     public function delete($email)
