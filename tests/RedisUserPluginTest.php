@@ -59,4 +59,9 @@ class RedisUserPluginTest extends \Codeception\Test\Unit
         $this->assertEquals(0, $this->plugin->delete($this->user->email()));
         $this->assertEquals(0, $this->plugin->delete('someother@email.com'));
     }
+
+    public function testInvalidUser()
+    {
+        $this->assertNull($this->plugin->getByEmail('blahasdfasdf'));
+    }
 }
