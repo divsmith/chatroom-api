@@ -66,6 +66,18 @@ class MySQLMessagePlugin implements MessagePluginInterface
 
     public function getByDateRange($chatroomID, \DateTime $start, \DateTime $end)
     {
-        // TODO: Implement getByDateRange() method.
+        $statement = $this->db->prepare('SELECT uuid, dateCreated, dateUpdated, message, email, chatroomID FROM Messages WHERE chatroomID = ?
+                                            AND dateCreated BETWEEN ? AND ?');
+
+        $statement->execute([$chatroomID, $start->format('Y-m-d H:i:s'), $end->format('Y-m-d H:i:s')]);
+        $messages = [];
+
+        foreach($statement as $data)
+        {
+            $messages[] = new Message($data['email'], $data['chatroomID'], $data['message'], new \DateTime($data['dateCreated']),
+                new \DateTime($data['dateUpdated']), $data['uuid']);
+        }
+
+        return $messages;
     }
 }
