@@ -10,7 +10,7 @@ class ChatRoom
     protected $dateUpdated;
     protected $archived = false;
 
-    public function __construct($name, $dateCreated, $dateUpdated, $uuid = null)
+    public function __construct($name, $dateCreated, $dateUpdated, $uuid)
     {
         $this->name = $name;
         $this->dateCreated = $dateCreated;
@@ -29,9 +29,17 @@ class ChatRoom
         return $this->archived;
     }
 
-    public function name()
+    public function name($name = null)
     {
-        return $this->name;
+        if ($name == null)
+        {
+            return $this->name;
+        }
+        else
+        {
+            $this->name = $name;
+            $this->dateUpdated = new \DateTime('now');
+        }
     }
 
     public function created()
