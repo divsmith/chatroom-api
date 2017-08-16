@@ -20,4 +20,24 @@ class MessageJack
         $this->plugin = $plugin;
     }
 
+    public function getByID($id)
+    {
+        return $this->plugin->getByDateRange($id);
+    }
+
+    public function getByDateRange($chatroomID, \DateTime $start, \DateTime $end)
+    {
+        return $this->plugin->getByDateRange($chatroomID, $start, $end);
+    }
+
+    public function persist(Message $message)
+    {
+        return $this->plugin->persist($message);
+    }
+
+    public function delete($id)
+    {
+        return $this->plugin->delete($id);
+    }
+
 }

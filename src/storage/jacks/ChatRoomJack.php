@@ -35,4 +35,9 @@ class ChatRoomJack
     {
         return $this->plugin->persist($room);
     }
+
+    public function delete($uuid)
+    {
+        return $this->plugin->delete($uuid);
+    }
 }
