@@ -111,7 +111,11 @@ class MySQLChatRoomPluginTest extends \Codeception\Test\Unit
         $this->plugin->persist($room2);
         $this->plugin->persist($room3);
 
-        $this->assertEquals([$room1, $room2, $room3], $this->plugin->getAll());
+        $results = $this->plugin->getAll();
+
+        $this->assertTrue(in_array($room1, $results));
+        $this->assertTrue(in_array($room2, $results));
+        $this->assertTrue(in_array($room3, $results));
 
         $this->uuids[] = $uuid1;
         $this->uuids[] = $uuid2;

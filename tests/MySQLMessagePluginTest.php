@@ -97,7 +97,10 @@ class MySQLMessagePluginTest extends \Codeception\Test\Unit
         $this->plugin->persist($message2);
         $this->plugin->persist($message3);
 
-        $this->assertEquals([$message1, $message2], $this->plugin->getAll('1234'));
+        $results = $this->plugin->getAll('1234');
+
+        $this->assertTrue(in_array($message1, $results));
+        $this->assertTrue(in_array($message2, $results));
 
         $this->uuids[] = $uuid1;
         $this->uuids[] = $uuid2;
