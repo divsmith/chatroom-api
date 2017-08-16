@@ -3,6 +3,7 @@ namespace Test;
 
 
 use Domain\Message;
+use Ramsey\Uuid\Uuid;
 
 class MessageTest extends \Codeception\Test\Unit
 {
@@ -26,11 +27,13 @@ class MessageTest extends \Codeception\Test\Unit
         $chatRoomID = '10';
         $message = "I'm a message!";
         $dateCreated = new \DateTime('now');
+        $uuid = Uuid::uuid4()->toString();
 
-        $message = new Message($userID, $chatRoomID, $message, $dateCreated);
+        $message = new Message($userID, $chatRoomID, $message, $dateCreated, $uuid);
 
         $this->assertEquals($userID, $message->userID());
         $this->assertEquals($chatRoomID, $message->chatRoomID());
         $this->assertEquals($dateCreated, $message->created());
+        $this->assertEquals($uuid, $message->uuid());
     }
 }
