@@ -66,7 +66,7 @@ $app->post('/user', function($request, $response, $args) {
 });
 
 // Update a given user
-$app->patch('/user/{email}', function($request, $response, $args) {
+$app->put('/user/{email}', function($request, $response, $args) {
     $email = $request->getAttribute('email');
     $alias = $request->getParsedBodyParam('alias');
     $chatroomID = $request->getParsedBodyParam('chatroomID');
