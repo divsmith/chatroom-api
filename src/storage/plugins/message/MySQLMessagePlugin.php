@@ -9,7 +9,9 @@
 namespace Storage\Plugins\Message;
 
 
-class MySQLMessagePlugin
+use Domain\Message;
+
+class MySQLMessagePlugin implements MessagePluginInterface
 {
     protected $db;
 
@@ -24,23 +26,46 @@ class MySQLMessagePlugin
         return $statement->execute([$id]);
     }
 
-//    public function persist(Message $message)
-//    {
-//        $statement = $this->db->prepare('SELECT * FROM Messages WHERE uuid = ?');
-//        $statement->execute([$message->uuid()]);
-//        $rows = $statement->rowCount();
-//
-//        if ($rows == 0)
-//        {
-//            // Insert a new record into the database.
-//            $statement = $this->db->prepare('INSERT INTO Messages(uuid, dateCreated, message, email, chatroomID) VALUES(?, ?, ?, ?, ?)');
-//            return $statement->execute([$message->uuid(), $message->created()->format('Y-m-d H:i:s'), $room->updated()->format('Y-m-d H:i:s'), $room->name()]);
-//        }
-//        else
-//        {
-//            // Update an existing record
-//            $statement = $this->db->prepare('UPDATE Chatrooms SET dateCreated = ?, dateUpdated = ?, name = ? WHERE uuid = ?');
-//            return $statement->execute([$room->created()->format('Y-m-d H:i:s'), $room->updated()->format('Y-m-d H:i:s'), $room->name(), $room->uuid()]);
-//        }
-//    }
+    public function persist(Message $message)
+    {
+        $statement = $this->db->prepare('SELECT * FROM Messages WHERE uuid = ?');
+        $statement->execute([$message->uuid()]);
+        $rows = $statement->rowCount();
+
+        if ($rows == 0)
+        {
+            // Insert a new record into the database.
+            $statement = $this->db->prepare('INSERT INTO Messages(uuid, dateCreated, dateUpdated, message, email, chatroomID) VALUES(?, ?, ?, ?, ?, ?)');
+            return $statement->execute([$message->uuid(), $message->created()->format('Y-m-d H:i:s'), $message->updated()->format('Y-m-d H:i:s'),
+                $message->message(), $message->email(), $message->chatRoomID()]);
+        }
+        else
+        {
+            // Update an existing record
+            $statement = $this->db->prepare('UPDATE Messages SET dateCreated = ?, dateUpdated = ?, message = ?, email = ?, chatroomID = ? WHERE uuid = ?');
+            return $statement->execute([$message->created()->format('Y-m-d H:i:s'), $message->updated()->format('Y-m-d H:i:s'),
+                $message->message(), $message->email(), $message->chatRoomID()]);
+        }
+    }
+
+    public function getByID($id)
+    {
+        $statement = $this->db->prepare('SELECT uuid, dateCreated, dateUpdated, message, email, chatroomID FROM Messages WHERE uuid = ?');
+        $statement->execute([$id]);
+        $data = $statement->fetch(\PDO::FETCH_ASSOC);
+
+        if ($data != null)
+        {
+            return new Message($data['email'], $data['chatroomID'], $data['message'], new \DateTime($data['dateCreated']),
+                new \DateTime($data['dateUpdated']), $data['uuid']);
+        }
+
+        return null;
+
+    }
+
+    public function getByDateRange($chatroomID, \DateTime $start, \DateTime $end)
+    {
+        // TODO: Implement getByDateRange() method.
+    }
 }

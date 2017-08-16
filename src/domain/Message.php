@@ -22,9 +22,14 @@ class Message
         $this->uuid = $uuid;
     }
 
-    public function userID()
+    public function email()
     {
         return $this->userEmail;
+    }
+
+    public function message()
+    {
+        return $this->message;
     }
 
     public function chatRoomID()
