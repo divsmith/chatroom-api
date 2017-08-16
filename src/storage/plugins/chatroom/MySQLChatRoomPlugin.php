@@ -17,7 +17,7 @@ class MySQLChatRoomPlugin implements ChatRoomPluginInterface
 
     public function __construct()
     {
-        $this->db = new \PDO('mysql:host=172.18.0.3;dbname=cs3620', 'alpine', 'supersecretpassword');
+        $this->db = new \PDO('mysql:host=' . getenv('MYSQL_HOST') . ';dbname=' . getenv('MYSQL_DB'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'));
     }
 
     public function getByID($id)

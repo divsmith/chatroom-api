@@ -3,6 +3,7 @@ namespace Test;
 
 
 use Carbon\Carbon;
+use Dotenv\Dotenv;
 use Domain\Message;
 use Ramsey\Uuid\Uuid;
 use Storage\Plugins\Message\MySQLMessagePlugin;
@@ -18,6 +19,9 @@ class MySQLMessagePluginTest extends \Codeception\Test\Unit
 
     protected function _before()
     {
+        $dotenv = new Dotenv(__DIR__ . '/../');
+        $dotenv->load();
+
         $this->plugin = new MySQLMessagePlugin();
         $this->uuids = [];
     }

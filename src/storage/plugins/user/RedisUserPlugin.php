@@ -19,7 +19,7 @@ class RedisUserPlugin implements UserPluginInterface
 
     public function __construct()
     {
-        $this->client = new Client('tcp://172.18.0.2:6379');
+        $this->client = new Client('tcp://' . getenv('REDIS_HOST') . ':' . getenv('REDIS_PORT'));
     }
 
     public function getByEmail($email)

@@ -3,6 +3,7 @@ namespace Test;
 
 
 use Domain\ChatRoom;
+use Dotenv\Dotenv;
 use Ramsey\Uuid\Uuid;
 use Storage\Plugins\Chatroom\MySQLChatRoomPlugin;
 
@@ -17,6 +18,9 @@ class MySQLChatRoomPluginTest extends \Codeception\Test\Unit
 
     protected function _before()
     {
+        $dotenv = new Dotenv(__DIR__ . '/../');
+        $dotenv->load();
+
         $this->plugin = new MySQLChatRoomPlugin();
         $this->uuids = [];
     }

@@ -3,6 +3,7 @@ namespace Test;
 
 
 use Domain\User;
+use Dotenv\Dotenv;
 use Storage\User\RedisUserPlugin;
 
 class RedisUserPluginTest extends \Codeception\Test\Unit
@@ -16,6 +17,9 @@ class RedisUserPluginTest extends \Codeception\Test\Unit
 
     protected function _before()
     {
+        $dotenv = new Dotenv(__DIR__ . '/../');
+        $dotenv->load();
+
         $this->user = new User('parker@parkersmith.us', 'divsmith');
         $this->plugin = new RedisUserPlugin();
         $this->plugin->delete($this->user->email());
