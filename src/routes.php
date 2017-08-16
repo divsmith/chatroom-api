@@ -22,8 +22,8 @@ $app->get('/mysql', function($request, $response, $args) {
 //    $response->getBody()->write("Hello, $name");
 //});
 
+// View all chatrooms
 $app->get('/chatroom', function($request, $response, $args) {
-    // Return all chatrooms
     $jack = $this->get('chatroomjack');
 
     $rooms = $jack->getAll();
@@ -38,8 +38,8 @@ $app->get('/chatroom', function($request, $response, $args) {
     return $response->withJson($json);
 });
 
+// Create a chatroom
 $app->post('/chatroom', function($request, $response, $args) {
-   // Create a chat room
     $jack = $this->get('chatroomjack');
 
     $name = $request->getParam('name');
@@ -55,6 +55,7 @@ $app->post('/chatroom', function($request, $response, $args) {
     return $response->withStatus(500);
 });
 
+// View a single chatroom
 $app->get('/chatroom/{uuid}', function($request, $response, $args) {
     $jack = $this->get('chatroomjack');
 
@@ -68,8 +69,8 @@ $app->get('/chatroom/{uuid}', function($request, $response, $args) {
     return $response->withStatus(404);
 });
 
+// Add a user
 $app->post('/user', function($request, $response, $args) {
-   // Create a user
     $email = $request->getParam('email');
     $alias = $request->getParam('alias');
 
@@ -83,9 +84,8 @@ $app->post('/user', function($request, $response, $args) {
     }
 });
 
+// Update a given user
 $app->patch('/user/{email}', function($request, $response, $args) {
-   // Update a user
-
     $email = $request->getAttribute('email');
     $alias = $request->getParsedBodyParam('alias');
     $chatroomID = $request->getParsedBodyParam('chatroomID');
@@ -107,6 +107,7 @@ $app->patch('/user/{email}', function($request, $response, $args) {
     return $response->withStatus(206);
 });
 
+// View a user
 $app->get('/user/{email}', function($request, $response, $args) {
     $email = $request->getAttribute('email');
 
