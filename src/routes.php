@@ -123,13 +123,104 @@ $app->get('/user/{email}', function($request, $response, $args) {
     return $response->withStatus(404);
 });
 
-$app->get('/user/{email}/chatroom/message', function() {
-    // Return all messages for joined chatroom
+// Show all messages for the joined chatroom, optionally by a specified date.
+$app->get('/user/{email}/chatroom/messages', function($request, $response, $args) {
+    $userJack = $this->get('userjack');
+    $email = $request->getAttribute('email');
+    $user = $userJack->getByEmail($email);
+    $start = $_GET['start'];
+    $end = $_GET['end'];
 
+    if ($user == null)
+    {
+        // User wasn't found
+        return $response->withStatus(404);
+    }
+
+    $chatroomID = $user->chatRoomID();
+    if ($chatroomID == null)
+    {
+        // User hasn't joined a chatroom
+        return $response->withJson(['error' => 'Not joined to a chatroom'], 406);
+    }
+
+    $messageJack = $this->get('messagejack');
     // filter by date range if exists
+
+    if ($start == null || $end == null)
+    {
+        $messages = $messageJack->getAll($chatroomID);
+    }
+    else
+    {
+        try {
+            $start = new DateTime($start);
+            $end = new DateTime($end);
+        } catch (Exception $e)
+        {
+            return $response->withJson(['error' => 'Invalid start or end date'], 406);
+        }
+
+        $messages = $messageJack->getByDateRange($chatroomID, $start, $end);
+    }
+
+    $json = [];
+
+    foreach ($messages as $message)
+    {
+        $json[] = ['email' => $message->email(), 'message' => $message->message(), 'created' => $message->created(), 'updated' => $message->updated(), 'uuid' => $message->uuid()];
+    }
+
+    return $response->withJson($json);
 });
 
-$app->post('/user/{email}/chatroom/message', function() {
-   // Post a message to joined chatroom
+// Post a message to the joined chatroom.
+$app->post('/user/{email}/chatroom/messages', function($request, $response, $args) {
+    $userJack = $this->get('userjack');
+    $email = $request->getAttribute('email');
+    $message = $request->getParam('message');
+    $user = $userJack->getByEmail($email);
+    $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
+
+
+    if ($user == null)
+    {
+        // User wasn't found
+        return $response->withStatus(404);
+    }
+
+    $chatroomID = $user->chatRoomID();
+    if ($chatroomID == null)
+    {
+        // User hasn't joined a chatroom
+        return $response->withJson(['error' => 'Not joined to a chatroom'], 406);
+    }
+
+    $messageJack = $this->get('messagejack');
+
+    $message = new \Domain\Message($user->email(), $chatroomID, $message, new DateTime('now'), new DateTime('now'), $uuid);
+
+    try {
+        $messageJack->persist($message);
+    } catch (Exception $e)
+    {
+        return $response->withStatus(500);
+    }
+
+    return $response->withJson(['message' => '/message/' . $uuid], 201);
+});
+
+$app->get('/message/{id}', function($request, $response, $args) {
+    $id = $request->getAttribute('id');
+    $jack = $this->get('messagejack');
+
+    $message = $jack->getByID($id);
+
+    if ($message == null)
+    {
+        return $response->withStatus(404);
+    }
+
+    return $response->withJson(['email' => $message->email(), 'chatroomID' => $message->chatRoomID(), 'message' => $message->message(), 'created' => $message->created(), 'updated' => $message->updated(), 'uuid' => $message->uuid()]);
 });
 

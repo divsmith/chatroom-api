@@ -24,6 +24,11 @@ class RedisUserPlugin implements UserPluginInterface
 
     public function getByEmail($email)
     {
+        if (!$this->client->exists($email))
+        {
+            return null;
+        }
+
         $data = $this->client->hgetall($email);
         return new User($email, $data['alias'], $data['chatRoomID']);
     }

@@ -9,6 +9,7 @@
 namespace Storage\Jacks;
 
 
+use Domain\Message;
 use Storage\Plugins\Message\MessagePluginInterface;
 
 class MessageJack
@@ -22,7 +23,7 @@ class MessageJack
 
     public function getByID($id)
     {
-        return $this->plugin->getByDateRange($id);
+        return $this->plugin->getByID($id);
     }
 
     public function getByDateRange($chatroomID, \DateTime $start, \DateTime $end)
