@@ -16,4 +16,5 @@ interface ChatRoomPluginInterface
     public function getByID($id);
     public function getAll();
     public function persist(ChatRoom $room);
+    public function delete($id);
 }

@@ -36,7 +36,22 @@ class MySQLChatRoomPlugin implements ChatRoomPluginInterface
 
     public function getAll()
     {
-        // TODO: Implement getAll() method.
+        $rooms = [];
+
+        $statement = $this->db->prepare('SELECT uuid, dateCreated, dateUpdated, name FROM Chatrooms');
+        $statement->execute();
+        foreach($statement as $row)
+        {
+            $rooms[] = new ChatRoom($row['name'], new \DateTime($row['dateCreated']), new \DateTime($row['dateUpdated']), $row['uuid']);
+        }
+
+        return $rooms;
+    }
+
+    public function delete($id)
+    {
+        $statement = $this->db->prepare('DELETE FROM Chatrooms WHERE uuid = ?');
+        return $statement->execute([$id]);
     }
 
     public function persist(ChatRoom $room)
