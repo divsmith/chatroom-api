@@ -16,4 +16,5 @@ interface MessagePluginInterface
     public function getByDateRange($chatroomID, \DateTime $start, \DateTime $end);
     public function persist(Message $message);
     public function delete($id);
+    public function getAll($id);
 }

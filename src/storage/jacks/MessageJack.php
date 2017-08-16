@@ -30,6 +30,11 @@ class MessageJack
         return $this->plugin->getByDateRange($chatroomID, $start, $end);
     }
 
+    public function getAll($id)
+    {
+        return $this->plugin->getAll($id);
+    }
+
     public function persist(Message $message)
     {
         return $this->plugin->persist($message);

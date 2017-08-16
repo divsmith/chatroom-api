@@ -80,4 +80,20 @@ class MySQLMessagePlugin implements MessagePluginInterface
 
         return $messages;
     }
+
+    public function getAll($chatroomID)
+    {
+        $statement = $this->db->prepare('SELECT uuid, dateCreated, dateUpdated, message, email, chatroomID FROM Messages WHERE chatroomID = ?');
+
+        $statement->execute([$chatroomID]);
+        $messages = [];
+
+        foreach($statement as $data)
+        {
+            $messages[] = new Message($data['email'], $data['chatroomID'], $data['message'], new \DateTime($data['dateCreated']),
+                new \DateTime($data['dateUpdated']), $data['uuid']);
+        }
+
+        return $messages;
+    }
 }
