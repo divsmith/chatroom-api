@@ -16,6 +16,9 @@ Run `create_tables.sql` against your MySQL installation to create the appropriat
 Run the application by typing `docker-compose up -d` in the project directory. The project will then be viewable on
 the local machine, usually at `172.18.0.1`
 
+All client requests must be authenticated by passing in a `token` header with the appropriate value.
+Failure to do so will result in an automatic `401 Unauthorized`. Implementation of this authentication filtering can be seen in `src/middleware.php`.
+
 ## Tests
 Run unit tests by typing `vendor/bin/codecept run unit` in the project directory. 
 
@@ -23,7 +26,7 @@ Code coverage results can be viewed by running `vendor/bin/codecept run unit --c
 
 Integration tests can be run by importing `postman_integration_tests.json` into Postman. Add a `url`
 environment variable that corresponds to the local base url that the chatroom server is running on, then
-run the `Chatroom Tests` collection.
+run the `Chatroom Tests` collection. All Postman tests are pre-configured with the appropriate `token` header.
 
 ## Endpoints
 ### Create User Profile
