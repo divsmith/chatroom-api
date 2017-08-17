@@ -25,7 +25,13 @@
 			"request": {
 				"url": "{{url}}/chatroom",
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "supersecrettoken",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
@@ -57,7 +63,13 @@
 			"request": {
 				"url": "{{url}}/chatroom",
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "supersecrettoken",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
@@ -94,6 +106,11 @@
 						"key": "Content-Type",
 						"value": "application/x-www-form-urlencoded",
 						"description": ""
+					},
+					{
+						"key": "token",
+						"value": "supersecrettoken",
+						"description": ""
 					}
 				],
 				"body": {
@@ -127,7 +144,13 @@
 			"request": {
 				"url": "{{url}}/chatroom/{{chatroomID}}",
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "supersecrettoken",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
@@ -183,7 +206,13 @@
 			"request": {
 				"url": "{{url}}/user",
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "supersecrettoken",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
@@ -225,7 +254,13 @@
 			"request": {
 				"url": "{{url}}{{userLink}}",
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "supersecrettoken",
+						"description": ""
+					}
+				],
 				"body": {},
 				"description": ""
 			},
@@ -250,7 +285,13 @@
 			"request": {
 				"url": "{{url}}/user/{{$guid}}@testing.com",
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "supersecrettoken",
+						"description": ""
+					}
+				],
 				"body": {},
 				"description": ""
 			},
@@ -276,7 +317,13 @@
 			"request": {
 				"url": "{{url}}{{userLink}}/chatroom/messages",
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "supersecrettoken",
+						"description": ""
+					}
+				],
 				"body": {},
 				"description": "User can't view messages before joining a chatroom"
 			},
@@ -311,6 +358,11 @@
 					{
 						"key": "Content-Type",
 						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					},
+					{
+						"key": "token",
+						"value": "supersecrettoken",
 						"description": ""
 					}
 				],
@@ -355,7 +407,13 @@
 			"request": {
 				"url": "{{url}}{{userLink}}/chatroom/messages",
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "supersecrettoken",
+						"description": ""
+					}
+				],
 				"body": {},
 				"description": "User can't view messages before joining a chatroom"
 			},
@@ -396,7 +454,13 @@
 			"request": {
 				"url": "{{url}}{{userLink}}/chatroom/messages",
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "supersecrettoken",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
@@ -430,7 +494,13 @@
 			"request": {
 				"url": "{{url}}{{userLink}}/chatroom/messages",
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "supersecrettoken",
+						"description": ""
+					}
+				],
 				"body": {},
 				"description": "User can't view messages before joining a chatroom"
 			},
@@ -476,6 +546,11 @@
 						"key": "Content-Type",
 						"value": "application/x-www-form-urlencoded",
 						"description": ""
+					},
+					{
+						"key": "token",
+						"value": "supersecrettoken",
+						"description": ""
 					}
 				],
 				"body": {
@@ -519,9 +594,37 @@
 			"request": {
 				"url": "{{url}}{{userLink}}/chatroom/messages",
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "supersecrettoken",
+						"description": ""
+					}
+				],
 				"body": {},
 				"description": "User can't view messages before joining a chatroom"
+			},
+			"response": []
+		},
+		{
+			"name": "View Chatrooms w/o Authorization",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 401\"] = responseCode.code === 401;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/chatroom",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
 			},
 			"response": []
 		}
