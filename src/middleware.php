@@ -9,7 +9,6 @@ $app->add(function($request, $response, $next) {
     {
         return $next($request, $response);
     }
-
-    //var_dump($headers);
+    
     return $response->withStatus(401);
 });
