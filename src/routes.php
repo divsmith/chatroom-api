@@ -68,6 +68,23 @@ $app->post('/user', function($request, $response, $args) {
     }
 });
 
+// Update a chat room name.
+$app->put('/chatroom/{id}', function($request, $response, $args) {
+    $jack = $this->get('chatroomjack');
+    $name = $request->getParsedBodyParam('name');
+    $uuid = $request->getAttribute('id');
+    $room = $jack->getByID($uuid);
+
+    if ($room == null)
+    {
+        return $response->withStatus(404);
+    }
+
+    $room->name($name);
+    $jack->persist($room);
+    return $response->withStatus(206);
+});
+
 // Update a given user
 $app->put('/user/{email}', function($request, $response, $args) {
     $email = $request->getAttribute('email');
