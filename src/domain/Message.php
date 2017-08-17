@@ -27,9 +27,14 @@ class Message
         return $this->userEmail;
     }
 
-    public function message()
+    public function message($message = null)
     {
-        return $this->message;
+        if ($message == null)
+        {
+            return $this->message;
+        }
+
+        $this->message = $message;
     }
 
     public function chatRoomID()

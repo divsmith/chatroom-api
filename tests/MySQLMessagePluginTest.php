@@ -83,6 +83,13 @@ class MySQLMessagePluginTest extends \Codeception\Test\Unit
         $this->uuids[] = $uuid3;
     }
 
+    public function testUpdate()
+    {
+        $uuid = Uuid::uuid4()->toString();
+        $message = new Message('test@test.com', '1234', 'message1', Carbon::createFromDate('2013', '1', '5'), Carbon::createFromDate('2013', '1', '5'), $uuid);
+        $this->plugin->persist($message);
+    }
+
     public function testGetAll()
     {
         $uuid1 = Uuid::uuid4()->toString();
