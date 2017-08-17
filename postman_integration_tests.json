@@ -1,0 +1,529 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Chatroom Tests",
+		"_postman_id": "fcf876c0-c598-0d7f-6268-1ab9cde73ca3",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Chatroom",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 201\"] = responseCode.code === 201;",
+							"postman.setEnvironmentVariable('chatroomlink', postman.getResponseHeader('Location'));",
+							"postman.setEnvironmentVariable('chatroomID', postman.getResponseHeader('UUID'));"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/chatroom",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Postman Chatroom",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "View Chatroom",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Body matches string\"] = responseBody.has(\"Postman Chatroom\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/chatroom",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "testing location",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update Chatroom",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 206\"] = responseCode.code === 206;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/chatroom/{{chatroomID}}",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "Postman Changed Chatroom",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "View Chatroom",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Body matches string\"] = responseBody.has(\"Postman Changed Chatroom\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/chatroom/{{chatroomID}}",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "testing location",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 201\"] = responseCode.code === 201;",
+							"postman.setEnvironmentVariable('userLink', postman.getResponseHeader('Location'));",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var alias = guid();",
+							"var email = guid() + '@testing.com';",
+							"postman.setEnvironmentVariable('alias', alias);",
+							"postman.setEnvironmentVariable('email', email);",
+							"",
+							"function guid() {",
+							"  function s4() {",
+							"    return Math.floor((1 + Math.random()) * 0x10000)",
+							"      .toString(16)",
+							"      .substring(1);",
+							"  }",
+							"  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +",
+							"    s4() + '-' + s4() + s4() + s4();",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/user",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "{{email}}",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "alias",
+							"value": "{{alias}}",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "View User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"tests[\"Body matches string\"] = responseBody.has( environment[\"email\"]);",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Alias is correct\"] = jsonData.alias === environment[\"alias\"];"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}{{userLink}}",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "View Invalid User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"",
+							"",
+							"tests[\"Status code is 404\"] = responseCode.code === 404;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/user/{{$guid}}@testing.com",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "View Messages",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 406\"] = responseCode.code === 406;",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Error is correct\"] = jsonData.error === 'Not joined to a chatroom';"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}{{userLink}}/chatroom/messages",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "User can't view messages before joining a chatroom"
+			},
+			"response": []
+		},
+		{
+			"name": "Join Chatroom",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 206\"] = responseCode.code === 206;"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var chatroomID = environment[\"chatroomlink\"].split('/')[1];"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}{{userLink}}",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "chatroomID",
+							"value": "{{chatroomID}}",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "alias",
+							"value": "{{alias}}",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "View Messages",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"",
+							"",
+							"tests[\"Body is correct\"] = responseBody === \"[]\";"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}{{userLink}}/chatroom/messages",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "User can't view messages before joining a chatroom"
+			},
+			"response": []
+		},
+		{
+			"name": "Post Message to Chatroom",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 201\"] = responseCode.code === 201;",
+							"postman.setEnvironmentVariable('messageID', postman.getResponseHeader('UUID'));"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"postman.setEnvironmentVariable('message', guid());",
+							"function guid() {",
+							"  function s4() {",
+							"    return Math.floor((1 + Math.random()) * 0x10000)",
+							"      .toString(16)",
+							"      .substring(1);",
+							"  }",
+							"  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +",
+							"    s4() + '-' + s4() + s4() + s4();",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}{{userLink}}/chatroom/messages",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "message",
+							"value": "{{message}}",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "View Messages",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"tests[\"Body matches string\"] = responseBody.has(environment[\"message\"]);"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}{{userLink}}/chatroom/messages",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "User can't view messages before joining a chatroom"
+			},
+			"response": []
+		},
+		{
+			"name": "Leave Chat Room",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 206\"] = responseCode.code === 206;"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"postman.setEnvironmentVariable('newchatroomID', guid());",
+							"",
+							"function guid() {",
+							"  function s4() {",
+							"    return Math.floor((1 + Math.random()) * 0x10000)",
+							"      .toString(16)",
+							"      .substring(1);",
+							"  }",
+							"  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +",
+							"    s4() + '-' + s4() + s4() + s4();",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}{{userLink}}",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "chatroomID",
+							"value": "{{newchatroomID}}",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "alias",
+							"value": "{{alias}}",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "View Messages",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"",
+							"",
+							"tests[\"Body is correct\"] = responseBody === \"[]\";"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}{{userLink}}/chatroom/messages",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "User can't view messages before joining a chatroom"
+			},
+			"response": []
+		}
+	]
+}
