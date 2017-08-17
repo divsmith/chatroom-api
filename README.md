@@ -8,13 +8,20 @@ Clone the project into a directory, then run
     
 Rename `.env.example` to `.env` and fill in the required environment variables.
 
+Change all 4 `volumes:` paths in `docker-composer.yml` to match your installation directory.
+
 ## Running
 Run the application by typing `docker-compose up -d` in the project directory. The project will then be viewable on
 the local machine, usually at `172.18.0.1`
 
 ## Tests
 Run unit tests by typing `vendor/bin/codecept run unit` in the project directory. 
+
 Code coverage results can be viewed by running `vendor/bin/codecept run unit --coverage`
+
+Integration tests can be run by importing `postman_integration_tests.json` into Postman. Add a `url`
+environment variable that corresponds to the local base url that the chatroom server is running on, then
+run the `Chatroom Tests` collection.
 
 ## Endpoints
 ### Create User Profile
