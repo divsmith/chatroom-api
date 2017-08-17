@@ -24,8 +24,8 @@ Run unit tests by typing `vendor/bin/codecept run unit` in the project directory
 
 Code coverage results can be viewed by running `vendor/bin/codecept run unit --coverage`
 
-Integration tests can be run by importing `postman_integration_tests.json` into Postman. Add a `url`
-environment variable that corresponds to the local base url that the chatroom server is running on, then
+Integration tests can be run by importing `postman_integration_tests.json` into Postman. **Add a `url`
+environment variable** to Postman that corresponds to the local base url that the chatroom server is running on, then
 run the `Chatroom Tests` collection. All Postman tests are pre-configured with the appropriate `token` header.
 
 ## Endpoints
