@@ -1,14 +1,23 @@
-# Slim Framework 3 Skeleton Application
+# Parker Smith CS3620 Final Project
 
-Use this skeleton application to quickly setup and start working on a new Slim Framework 3 application. This application uses the latest Slim 3 with the PHP-View template renderer. It also uses the Monolog logger.
+## Installation
 
-This skeleton application was built for Composer. This makes setting up a new Slim Framework application quick and easy.
+Clone the project into a directory, then run
 
-## Install the Application
+    composer install
+    
+Rename `.env.example` to `.env` and fill in the required environment variables.
 
-Run this command from the directory in which you want to install your new Slim Framework application.
+## Running
+Run the application by typing `docker-compose up -d` in the project directory. The project will then be viewable on
+the local machine, usually at `172.18.0.1`
 
-    php composer.phar create-project slim/slim-skeleton [my-app-name]
+## Tests
+Run unit tests by typing `vendor/bin/codecept run unit` in the project directory. 
+Code coverage results can be viewed by running `vendor/bin/codecept run unit --coverage`
+
+## Endpoints
+
 
 Replace `[my-app-name]` with the desired directory name for your new application. You'll want to:
 
