@@ -10,6 +10,8 @@ Rename `.env.example` to `.env` and fill in the required environment variables.
 
 Change all 4 `volumes:` paths in `docker-composer.yml` to match your installation directory.
 
+Run `create_tables.sql` against your MySQL installation to create the appropriate tables.
+
 ## Running
 Run the application by typing `docker-compose up -d` in the project directory. The project will then be viewable on
 the local machine, usually at `172.18.0.1`
