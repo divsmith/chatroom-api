@@ -8,18 +8,38 @@ class ChatRoom
     protected $uuid;
     protected $dateCreated;
     protected $dateUpdated;
+    protected $archived = false;
 
-    public function __construct($name, $dateCreated, $dateUpdated, $uuid = null)
+    public function __construct($name, $dateCreated, $dateUpdated, $uuid)
     {
         $this->name = $name;
         $this->dateCreated = $dateCreated;
         $this->dateUpdated = $dateUpdated;
         $this->uuid = $uuid;
+
+        $now = new \DateTime('now');
+        if ($now->diff($dateUpdated)->format("%a") > 7)
+        {
+            $this->archived = true;
+        }
     }
 
-    public function name()
+    public function archived()
     {
-        return $this->name;
+        return $this->archived;
+    }
+
+    public function name($name = null)
+    {
+        if ($name == null)
+        {
+            return $this->name;
+        }
+        else
+        {
+            $this->name = $name;
+            $this->dateUpdated = new \DateTime('now');
+        }
     }
 
     public function created()

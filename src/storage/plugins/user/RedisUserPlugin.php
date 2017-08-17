@@ -19,27 +19,27 @@ class RedisUserPlugin implements UserPluginInterface
 
     public function __construct()
     {
-        $this->client = new Client('tcp://172.18.0.2:6379');
+        $this->client = new Client('tcp://' . getenv('REDIS_HOST') . ':' . getenv('REDIS_PORT'));
     }
 
     public function getByEmail($email)
     {
+        if (!$this->client->exists($email))
+        {
+            return null;
+        }
+
         $data = $this->client->hgetall($email);
         return new User($email, $data['alias'], $data['chatRoomID']);
     }
 
     public function persist(User $user)
     {
-        $this->client->hmset($user->email(), ['alias' => $user->alias(), 'chatRoomID' => $user->chatRoomID()]);
-    }
-
-    public function getAll()
-    {
-        // TODO: Implement getAll() method.
+        $this->client->hmset($user->email(), ['email' => $user->email(), 'alias' => $user->alias(), 'chatRoomID' => $user->chatRoomID()]);
     }
 
     public function delete($email)
     {
-
+        return $this->client->del($email);
     }
 }

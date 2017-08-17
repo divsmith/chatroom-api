@@ -52,4 +52,26 @@ class UserTest extends \Codeception\Test\Unit
         $user = new User($email, $alias);
     }
 
+    public function testUpdateAlias()
+    {
+        $email = 'parker@parkersmith.us';
+        $alias = 'divsmith';
+
+        $user = new User($email, $alias);
+        $user->changeAlias('something else');
+
+        $this->assertEquals('something else', $user->alias());
+    }
+
+    public function testUpdatechatRoomID()
+    {
+        $email = 'parker@parkersmith.us';
+        $alias = 'divsmith';
+
+        $user = new User($email, $alias, '20');
+        $user->changeChatRoomID('17');
+
+        $this->assertEquals('17', $user->chatRoomID());
+    }
+
 }

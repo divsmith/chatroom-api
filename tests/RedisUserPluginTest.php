@@ -3,6 +3,7 @@ namespace Test;
 
 
 use Domain\User;
+use Dotenv\Dotenv;
 use Storage\User\RedisUserPlugin;
 
 class RedisUserPluginTest extends \Codeception\Test\Unit
@@ -16,6 +17,9 @@ class RedisUserPluginTest extends \Codeception\Test\Unit
 
     protected function _before()
     {
+        $dotenv = new Dotenv(__DIR__ . '/../');
+        $dotenv->load();
+
         $this->user = new User('parker@parkersmith.us', 'divsmith');
         $this->plugin = new RedisUserPlugin();
         $this->plugin->delete($this->user->email());
@@ -33,5 +37,31 @@ class RedisUserPluginTest extends \Codeception\Test\Unit
 
         $this->assertEquals($this->user->email(), $user->email());
         $this->assertEquals($this->user->alias(), $user->alias());
+    }
+
+    public function testUpdates()
+    {
+        $this->plugin->persist($this->user);
+        $this->user->changeAlias('something else');
+        $this->user->changeChatRoomID('17');
+        $this->plugin->persist($this->user);
+
+        $user = $this->plugin->getByEmail($this->user->email());
+
+        $this->assertEquals('something else', $user->alias());
+        $this->assertEquals('17', $user->chatRoomID());
+    }
+
+    public function testDelete()
+    {
+        $this->plugin->persist($this->user);
+        $this->assertEquals(1, $this->plugin->delete($this->user->email()));
+        $this->assertEquals(0, $this->plugin->delete($this->user->email()));
+        $this->assertEquals(0, $this->plugin->delete('someother@email.com'));
+    }
+
+    public function testInvalidUser()
+    {
+        $this->assertNull($this->plugin->getByEmail('blahasdfasdf'));
     }
 }

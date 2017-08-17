@@ -25,6 +25,16 @@ class User
         return $this->chatRoomID;
     }
 
+    public function changeAlias($alias)
+    {
+        $this->alias = $alias;
+    }
+
+    public function changeChatRoomID($chatRoomID)
+    {
+        $this->chatRoomID = $chatRoomID;
+    }
+
     public function __construct($email, $alias, $chatRoomID = null)
     {
         // Validate email address
