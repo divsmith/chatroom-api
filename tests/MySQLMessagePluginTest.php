@@ -104,7 +104,7 @@ class MySQLMessagePluginTest extends \Codeception\Test\Unit
 
         $this->assertEquals($retrieved, $this->plugin->getByID($uuid));
 
-        $this->uuid[] =$uuid;
+        $this->uuids[] =$uuid;
     }
 
     public function testGetAll()

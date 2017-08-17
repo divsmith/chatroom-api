@@ -60,7 +60,5 @@ class MessageTest extends \Codeception\Test\Unit
 
         $message->message('New message');
         $this->assertEquals('New message', $message->message());
-
-        $this->uuids[] = $uuid;
     }
 }
