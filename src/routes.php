@@ -30,6 +30,8 @@ $app->post('/chatroom', function($request, $response, $args) {
 
     if ($jack->persist(new \Domain\ChatRoom($name, $created, $updated, $uuid)))
     {
+        $response = $response->withHeader('Location', '/chatroom/' . $uuid);
+        $response = $response->withHeader('UUID', $uuid);
         return $response->withJson(['chatroom' => '/chatroom/' . $uuid], 201);
     }
 
@@ -59,6 +61,7 @@ $app->post('/user', function($request, $response, $args) {
 
     try {
         $jack->persist(new User($email, $alias));
+        $response = $response->withHeader('Location', '/user/' . $email);
         return $response->withJson(['user' => '/user/' . $email], 201);
     } catch(\Domain\Exceptions\InvalidEmailException $e) {
         return $response->withJson(['error' => 'Invalid email address'], 406);
@@ -188,9 +191,12 @@ $app->post('/user/{email}/chatroom/messages', function($request, $response, $arg
         return $response->withStatus(500);
     }
 
+    $response = $response->withHeader('Location', '/message/' . $uuid);
+    $response = $response->withHeader('UUID', $uuid);
     return $response->withJson(['message' => '/message/' . $uuid], 201);
 });
 
+// View an individual message
 $app->get('/message/{id}', function($request, $response, $args) {
     $id = $request->getAttribute('id');
     $jack = $this->get('messagejack');
