@@ -85,9 +85,26 @@ class MySQLMessagePluginTest extends \Codeception\Test\Unit
 
     public function testUpdate()
     {
+        $email = 'parker@parkersmith.us';
+        $chatroom = 'asdf1234';
+        $message = 'This is the message for the chatroom';
+        $created = new \DateTime('now');
+        $updated = new \DateTime('now');
         $uuid = Uuid::uuid4()->toString();
-        $message = new Message('test@test.com', '1234', 'message1', Carbon::createFromDate('2013', '1', '5'), Carbon::createFromDate('2013', '1', '5'), $uuid);
-        $this->plugin->persist($message);
+
+        $message = new Message($email, $chatroom, $message, $created, $updated, $uuid);
+
+        $this->assertTrue($this->plugin->persist($message));
+
+        $retrieved = $this->plugin->getByID($uuid);
+        $this->assertEquals($message, $retrieved);
+
+        $retrieved->message('New message');
+        $this->assertTrue($this->plugin->persist($retrieved));
+
+        $this->assertEquals($retrieved, $this->plugin->getByID($uuid));
+
+        $this->uuid[] =$uuid;
     }
 
     public function testGetAll()

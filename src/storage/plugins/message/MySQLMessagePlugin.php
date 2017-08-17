@@ -44,7 +44,7 @@ class MySQLMessagePlugin implements MessagePluginInterface
             // Update an existing record
             $statement = $this->db->prepare('UPDATE Messages SET dateCreated = ?, dateUpdated = ?, message = ?, email = ?, chatroomID = ? WHERE uuid = ?');
             return $statement->execute([$message->created()->format('Y-m-d H:i:s'), $message->updated()->format('Y-m-d H:i:s'),
-                $message->message(), $message->email(), $message->chatRoomID()]);
+                $message->message(), $message->email(), $message->chatRoomID(), $message->uuid()]);
         }
     }
 
