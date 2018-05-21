@@ -1,5 +1,3 @@
-# Parker Smith CS3620 Final Project
-
 ## Installation
 
 Clone the project into a directory, then run
